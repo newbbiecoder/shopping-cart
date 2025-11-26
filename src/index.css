@@ -5,29 +5,6 @@
   src: url(./assets/fonts/Inter/Inter-VariableFont_opsz\,wght.ttf);
 }
 
-/* .text {
-  position: absolute;
-  top: 166px; 
-  left: 128px; 
-  width: 520px; 
-  font-family: Inter; 
-  font-size: 48px; 
-  line-height: 60px; 
-  font-weight: 700; 
-  color: #3D99F5FF; 
-}
-
-/* Container */
-/* .container {
-  position: absolute; 
-  top: 72px; 
-  left: 0px; 
-  width: 1440px; 
-  height: 610px; 
-  background: #F0F7FEFF; 
-  border-radius: 0px 0px 0px 0px; 
-} */
-
 :root {
   font-family: Inter;
   line-height: 1.5;
