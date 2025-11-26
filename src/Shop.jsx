@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react"
+import { useOutletContext } from "react-router";
 
 export default function Shop() {
     const [items, setItems] = useState([]);
     const [dataIsLoaded, setDataIsLoaded] = useState(false);
+    const [cartItems, setCartItems, setShowModal] = useOutletContext();
 
     let randomNumber;
     let usedNumbers = new Set();
@@ -45,6 +47,19 @@ export default function Shop() {
         console.log(items);
     }
 
+    function handleSubmit(e, item) {
+        console.log(e.target);
+        setCartItems(prevItems => (
+            [...prevItems, {
+                title: item.title,
+                image: item.image,
+                price: item.price
+            }]
+        ))
+        console.log(cartItems);
+        setShowModal(true);
+    }
+
     return (
         <>
             <section>
@@ -67,15 +82,18 @@ export default function Shop() {
                 lg:grid-cols-4
                 xl:grid-cols-5
                 gap-6
-                justify-items-center 
+                justify-items-center
                 mb-4
                 ">
                     {items.map((item) => {
                         return (
-                            <div className="w-[300px] bg-white rounded-xl shadow-md p-4 flex flex-col items-center justify-between gap-4 hover:shadow-lg transition">
+                            <div className="w-[300px] rounded-xl shadow-md p-4 flex flex-col items-center justify-between gap-4 hover:shadow-lg transition">
                                 <img src={item.image} alt={item.title} className="w-full h-60 object-contain"/>
-                                <p className="text-lg font-semibold text-center text-gray-800">{item.title}</p>
-                                <button className="bg-blue-500 text-white px-10 font-semibold py-2 rounded-lg hover:bg-blue-600 transition cursor-pointer">Add to Cart</button>
+                                <div className="text-center">
+                                    <p className="text-lg font-semibold text-center text-gray-800">{item.title}</p>
+                                    <p className="text-xl text-gray-700 pt-2">${item.price}</p>
+                                </div>
+                                <button className="bg-blue-400 text-white px-10 font-semibold py-2 rounded-lg hover:bg-blue-500 transition cursor-pointer" onClick={(e) => handleSubmit(e, item)}>Add to Cart</button>
                             </div>
                         )
                     })}
@@ -84,3 +102,4 @@ export default function Shop() {
         </>
     )
 }
+
