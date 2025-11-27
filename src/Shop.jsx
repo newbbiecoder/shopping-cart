@@ -82,20 +82,27 @@ export default function Shop() {
         )
     }
 
-    // else if(dataIsLoaded) {
-    //     console.log(items);
-    // }
+    function handleSubmit(item) {
+        setCartItems(prevItems => {
+            const existing = prevItems.find(p => p.id === item.id);
 
-    function handleSubmit(e, item) {
-        // console.log(e.target);
-        setCartItems(prevItems => (
-            [...prevItems, {
-                title: item.title,
-                image: item.image,
-                price: item.price
-            }]
-        ))
-        // console.log(cartItems);
+            if(existing) {
+                return prevItems.map(p => 
+                    p.id === item.id ? {...p, qty: p.qty + 1} : p
+                );
+            }
+            return [
+                ...prevItems, 
+                {
+                    id: item.id,
+                    title: item.title,
+                    image: item.image,
+                    price: item.price,
+                    qty: 1
+                }
+            ];
+        })
+        
         setShowModal(true);
     }
 
@@ -132,7 +139,7 @@ export default function Shop() {
                                     <p className="text-lg font-semibold text-center text-gray-800">{item.title}</p>
                                     <p className="text-xl text-gray-700 pt-2">${item.price}</p>
                                 </div>
-                                <button className="bg-blue-400 text-white px-10 font-semibold py-2 rounded-lg hover:bg-blue-500 transition cursor-pointer" onClick={(e) => handleSubmit(e, item)}>Add to Cart</button>
+                                <button className="bg-blue-400 text-white px-10 font-semibold py-2 rounded-lg hover:bg-blue-500 transition cursor-pointer" onClick={() => handleSubmit(item)}>Add to Cart</button>
                             </div>
                         )
                     })}

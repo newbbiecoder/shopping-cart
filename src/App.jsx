@@ -11,24 +11,79 @@ import { useState } from "react";
 export default function App() {
     const [cartItems, setCartItems] = useState([]);
     const [showModal, setShowModal] = useState(false);
+
+    function increment(id) {
+        setCartItems(prev => 
+            prev.map(item => 
+                item.id === id
+                ? {...item, qty: item.qty + 1}
+                : item
+            )
+        )
+    }
+
+    function decrement(id) {
+        setCartItems(prev => 
+            prev.map(item => 
+                item.id === id
+                ? {...item, qty: item.qty > 0 ? item.qty - 1 : 0}
+                : item
+            )
+        )
+    }
     return (
         <>
-            <div className={`fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-end z-50 transition-opacity duration-300 ${showModal ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
-                <div className={`fixed top-0 right-0 h-full overflow-y-auto bg-white p-6 w-[380px] text-center rounded-lg shadow-lg flex flex-col gap-6 transition-transform duration-300 ${showModal ? "translate-x-0" : "translate-x-100"}`}>    
-                    {cartItems.map((item) => (
-                        <div className="flex items-start gap-4 py-3 border-b border-gray-300">
-                            <img src={item.image} alt={item.title} className="w-20 h-20 object-contain"/>
-                            <div className="flex-1">
-                                <p className="text-sm font-medium leading-snug">{item.title}</p>
-                                <p className="text-sm text-gray-600 mt-1">${item.price}</p>
+            <div 
+            className=
+            {`fixed inset-0
+             bg-black/40 
+             backdrop-blur-sm 
+             flex justify-end 
+             z-50 
+             transition-opacity 
+             duration-300 
+             ${showModal ? "opacity-100 pointer-events-auto" 
+             : "opacity-0 pointer-events-none"}`
+             }>
+                <div 
+                className=
+                {`h-full 
+                overflow-y-auto 
+                bg-white 
+                p-6 
+                w-[380px] 
+                text-center 
+                rounded-lg 
+                shadow-lg flex 
+                flex-col 
+                gap-6 
+                transition-transform 
+                duration-300
+                justify-between
+                ${showModal ? "translate-x-0" 
+                : "translate-x-full"}`
+                }>    
+                    <div className="flex flex-col gap-1 flex-wrap">
+                        {cartItems.map((item) => (
+                            <div className="flex items-start gap-4 py-3 border-b border-gray-300">
+                                <img src={item.image} alt={item.title} className="w-20 h-20 object-contain"/>
+                                <div className="flex-1">
+                                    <p className="text-sm font-medium leading-snug text-left">{item.title}</p>
+                                    <p className="text-sm text-gray-600 mt-1 text-left">${item.price}</p>
+                                    <div className="flex gap-5">
+                                        <p className="w-7 h-7 flex items-center justify-center border border-gray-400 rounded-full text-blue-500 font-bold text-lg cursor-pointer select-none" onClick={() => decrement(item.id)}><span>-</span></p>
+                                        <p>{item.qty}</p>
+                                        <p className="w-7 h-7 flex items-center justify-center border border-gray-400 rounded-full text-blue-500 font-bold text-lg cursor-pointer select-none" onClick={() => increment(item.id)}><span>+</span></p>
+                                    </div>
+                                </div>
+                                <p className="text-md font-semibold whitespace-nowrap scroll-auto">${(item.price * item.qty).toFixed(2)}</p> {/* TOTAL PRICE */}
                             </div>
-                            <p className="text-md font-semibold whitespace-nowrap scroll-auto">${item.price}</p> {/* TOTAL PRICE */}
-                        </div>
-                    ))}
-                    <div>
+                        ))}
+                    </div>
+                    <div >
                         <p>Subtotal: <span></span></p>
                         <div>
-                            <button className="bg-blue-500 hover:bg-blue-600 w-full text-white rounded-lg cursor-pointer">Go To Cart</button>
+                            <button className="bg-blue-500 hover:bg-blue-600 w-full text-white rounded-lg cursor-pointer py-2">Go To Cart</button>
                             <button className="mt-4 py-2 px-4 w-full text-black rounded-lg cursor-pointer border" onClick={() => setShowModal(false)}>Close</button>
                         </div>
                     </div>      
