@@ -28,6 +28,45 @@ export default function Shop() {
             }
 
             const result = await Promise.all(requests);
+            console.log(result)
+            result.map((item) => {
+                if(item.id === 1) {
+                    item.title = "Fjallraven - Foldsack No.1 Backpack"
+                }
+                else if(item.id === 11) {
+                    item.title = "Silicon Power 256GB SSD SATA III"
+                }
+                else if(item.id === 18) {
+                    item.title = "MBJ Women's Solid Short Sleeve"
+                }
+                else if(item.id === 17) {
+                    item.title = "Women Windbreaker Climbing Raincoats"
+                }
+                else if(item.id === 12) {
+                    item.title = "Playstation 4 Portable External Hard Drive"
+                }
+                else if(item.id === 8) {
+                    item.title = "Pierced Owl Rose Gold Stainless Steel"
+                }
+                else if(item.id === 13) {
+                    item.title = "Acer SB220Q 21.5 inches Full HD (1920 x 1080)"
+                }
+                else if(item.id === 10) {
+                    item.title = "SanDisk SSD PLUS 1TB Internal SSD"
+                }
+                else if(item.id === 5) {
+                    item.title = "John Hardy Women's Chain Bracelet"
+                }
+                else if(item.id === 14) {
+                    item.title = "Samsung 49-Inch CHG90 144Hz Gaming Monitor"
+                }
+                else if(item.id === 15) {
+                    item.title = "BIYLACLESEN Women's Jacket Winter Coats"
+                }
+                else if(item.id === 20) {
+                    item.title = "DANVOUY Womens    Casual Cotton Short"
+                }
+            }); 
             setItems(result);
 
             setTimeout(() => {
@@ -43,12 +82,12 @@ export default function Shop() {
         )
     }
 
-    else if(dataIsLoaded) {
-        console.log(items);
-    }
+    // else if(dataIsLoaded) {
+    //     console.log(items);
+    // }
 
     function handleSubmit(e, item) {
-        console.log(e.target);
+        // console.log(e.target);
         setCartItems(prevItems => (
             [...prevItems, {
                 title: item.title,
@@ -56,7 +95,7 @@ export default function Shop() {
                 price: item.price
             }]
         ))
-        console.log(cartItems);
+        // console.log(cartItems);
         setShowModal(true);
     }
 

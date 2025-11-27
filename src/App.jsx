@@ -13,29 +13,28 @@ export default function App() {
     const [showModal, setShowModal] = useState(false);
     return (
         <>
-            {showModal && (
-                <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-end z-50">
-                    <div className="bg-white p-6 w-90 text-center rounded-lg shadow-lg flex flex-col gap-6">    
-                        {cartItems.map((item) => (
-                            <div className="flex items-start gap-4 py-3 border-b border-gray-300">
-                                <img src={item.image} alt={item.title} className="w-20 h-20 object-contain"/>
-                                <div className="flex-1">
-                                    <p className="text-sm font-medium leading-snug">{item.title}</p>
-                                    <p className="text-sm text-gray-600 mt-1">${item.price}</p>
-                                </div>
-                                <p className="text-md font-semibold whitespace-nowrap scroll-auto">${item.price}</p> {/* TOTAL PRICE */}
+            <div className={`fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-end z-50 transition-opacity duration-300 ${showModal ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
+                <div className={`fixed top-0 right-0 h-full overflow-y-auto bg-white p-6 w-[380px] text-center rounded-lg shadow-lg flex flex-col gap-6 transition-transform duration-300 ${showModal ? "translate-x-0" : "translate-x-100"}`}>    
+                    {cartItems.map((item) => (
+                        <div className="flex items-start gap-4 py-3 border-b border-gray-300">
+                            <img src={item.image} alt={item.title} className="w-20 h-20 object-contain"/>
+                            <div className="flex-1">
+                                <p className="text-sm font-medium leading-snug">{item.title}</p>
+                                <p className="text-sm text-gray-600 mt-1">${item.price}</p>
                             </div>
-                        ))}
+                            <p className="text-md font-semibold whitespace-nowrap scroll-auto">${item.price}</p> {/* TOTAL PRICE */}
+                        </div>
+                    ))}
+                    <div>
+                        <p>Subtotal: <span></span></p>
                         <div>
-                            <p>Subtotal: <span></span></p>
-                            <div>
-                                <button className="bg-blue-500 hover:bg-blue-600 w-full text-white rounded-lg cursor-pointer">Go To Cart</button>
-                                <button className="mt-4 py-2 px-4 w-full text-black rounded-lg cursor-pointer border" onClick={() => setShowModal(false)}>Close</button>
-                            </div>
-                        </div>      
-                    </div>
+                            <button className="bg-blue-500 hover:bg-blue-600 w-full text-white rounded-lg cursor-pointer">Go To Cart</button>
+                            <button className="mt-4 py-2 px-4 w-full text-black rounded-lg cursor-pointer border" onClick={() => setShowModal(false)}>Close</button>
+                        </div>
+                    </div>      
                 </div>
-            )}
+            </div>
+            
             <header className="flex justify-between items-center flex-1">
                 <div className="flex p-2">
                     <span className="bg-[#3D99F5FF] p-1.5 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-7 fill-white"><title>cart-outline</title><path d="M17,18A2,2 0 0,1 19,20A2,2 0 0,1 17,22C15.89,22 15,21.1 15,20C15,18.89 15.89,18 17,18M1,2H4.27L5.21,4H20A1,1 0 0,1 21,5C21,5.17 20.95,5.34 20.88,5.5L17.3,11.97C16.96,12.58 16.3,13 15.55,13H8.1L7.2,14.63L7.17,14.75A0.25,0.25 0 0,0 7.42,15H19V17H7C5.89,17 5,16.1 5,15C5,14.65 5.09,14.32 5.24,14.04L6.6,11.59L3,4H1V2M7,18A2,2 0 0,1 9,20A2,2 0 0,1 7,22C5.89,22 5,21.1 5,20C5,18.89 5.89,18 7,18M16,11L18.78,6H6.14L8.5,11H16Z" /></svg ></span>
