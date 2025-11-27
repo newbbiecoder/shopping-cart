@@ -12,6 +12,12 @@ export default function App() {
     const [cartItems, setCartItems] = useState([]);
     const [showModal, setShowModal] = useState(false);
 
+    function getSubtotal() {
+        return cartItems.reduce((total, item) => {
+            return total + (item.price * item.qty)
+        }, 0)
+    }   
+
     function increment(id) {
         setCartItems(prev => 
             prev.map(item => 
@@ -65,7 +71,7 @@ export default function App() {
                 }>    
                     <div className="flex flex-col gap-1 flex-wrap">
                         {cartItems.map((item) => (
-                            <div className="flex items-start gap-4 py-3 border-b border-gray-300">
+                            <div className="flex items-start gap-4 py-3 border-b border-gray-300" key={item.id}>
                                 <img src={item.image} alt={item.title} className="w-20 h-20 object-contain"/>
                                 <div className="flex-1">
                                     <p className="text-sm font-medium leading-snug text-left">{item.title}</p>
@@ -80,8 +86,8 @@ export default function App() {
                             </div>
                         ))}
                     </div>
-                    <div >
-                        <p>Subtotal: <span></span></p>
+                    <div>
+                        <p className="flex justify-between pb-2 font-bold text-lg">Subtotal <span>${getSubtotal().toFixed(2)}</span></p>
                         <div>
                             <button className="bg-blue-500 hover:bg-blue-600 w-full text-white rounded-lg cursor-pointer py-2">Go To Cart</button>
                             <button className="mt-4 py-2 px-4 w-full text-black rounded-lg cursor-pointer border" onClick={() => setShowModal(false)}>Close</button>

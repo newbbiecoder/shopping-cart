@@ -102,7 +102,7 @@ export default function Shop() {
                 }
             ];
         })
-        
+        console.log(cartItems)
         setShowModal(true);
     }
 
@@ -133,7 +133,7 @@ export default function Shop() {
                 ">
                     {items.map((item) => {
                         return (
-                            <div className="w-[300px] rounded-xl shadow-md p-4 flex flex-col items-center justify-between gap-4 hover:shadow-lg transition">
+                            <div className="w-[300px] rounded-xl shadow-md p-4 flex flex-col items-center justify-between gap-4 hover:shadow-lg transition" key={item.id}>
                                 <img src={item.image} alt={item.title} className="w-full h-60 object-contain"/>
                                 <div className="text-center">
                                     <p className="text-lg font-semibold text-center text-gray-800">{item.title}</p>
