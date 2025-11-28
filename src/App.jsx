@@ -1,4 +1,5 @@
-import { Link } from "react-router"
+import { NavLink } from "react-router"
+import { Link } from "react-router";
 
 import { TbBrandFacebook } from "react-icons/tb"
 import { LuTwitter } from "react-icons/lu"
@@ -7,10 +8,13 @@ import { FiLinkedin } from "react-icons/fi";
 
 import { Outlet } from "react-router";
 import { useState } from "react";
+import { useRef } from "react";
 
 export default function App() {
     const [cartItems, setCartItems] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [showCart, setShowCart] = useState(false);
+    const dataRef = useRef(null);
 
     function getSubtotal() {
         return cartItems.reduce((total, item) => {
@@ -32,11 +36,12 @@ export default function App() {
         setCartItems(prev => 
             prev.map(item => 
                 item.id === id
-                ? {...item, qty: item.qty > 0 ? item.qty - 1 : 0}
+                ? {...item, qty: item.qty > 1 ? item.qty - 1 : 1}
                 : item
             )
         )
     }
+    
     return (
         <>
             <div 
@@ -74,22 +79,24 @@ export default function App() {
                             <div className="flex items-start gap-4 py-3 border-b border-gray-300" key={item.id}>
                                 <img src={item.image} alt={item.title} className="w-20 h-20 object-contain"/>
                                 <div className="flex-1">
-                                    <p className="text-sm font-medium leading-snug text-left">{item.title}</p>
-                                    <p className="text-sm text-gray-600 mt-1 text-left">${item.price}</p>
+                                    <p className="text-sm font-medium leading-snug text-left select-none">{item.title}</p>
+                                    <p className="text-sm text-gray-600 mt-1 text-left select-none">${item.price}</p>
                                     <div className="flex gap-5">
                                         <p className="w-7 h-7 flex items-center justify-center border border-gray-400 rounded-full text-blue-500 font-bold text-lg cursor-pointer select-none" onClick={() => decrement(item.id)}><span>-</span></p>
-                                        <p>{item.qty}</p>
+                                        <p className="select-none">{item.qty}</p>
                                         <p className="w-7 h-7 flex items-center justify-center border border-gray-400 rounded-full text-blue-500 font-bold text-lg cursor-pointer select-none" onClick={() => increment(item.id)}><span>+</span></p>
                                     </div>
                                 </div>
-                                <p className="text-md font-semibold whitespace-nowrap scroll-auto">${(item.price * item.qty).toFixed(2)}</p> {/* TOTAL PRICE */}
+                                <p className="text-md font-semibold whitespace-nowrap scroll-auto select-none">${(item.price * item.qty).toFixed(2)}</p> {/* TOTAL PRICE */}
                             </div>
                         ))}
                     </div>
                     <div>
-                        <p className="flex justify-between pb-2 font-bold text-lg">Subtotal <span>${getSubtotal().toFixed(2)}</span></p>
+                        <p className="flex justify-between pb-2 font-bold text-lg select-none">Subtotal <span>${getSubtotal().toFixed(2)}</span></p>
                         <div>
-                            <button className="bg-blue-500 hover:bg-blue-600 w-full text-white rounded-lg cursor-pointer py-2">Go To Cart</button>
+                            <Link to="cart" onClick={() => setShowModal(false)}>
+                                <button className="bg-blue-500 hover:bg-blue-600 w-full text-white rounded-lg cursor-pointer py-2">Go To Cart</button>
+                            </Link>
                             <button className="mt-4 py-2 px-4 w-full text-black rounded-lg cursor-pointer border" onClick={() => setShowModal(false)}>Close</button>
                         </div>
                     </div>      
@@ -102,13 +109,34 @@ export default function App() {
                     <p className="m-1 text-[#3D99F5FF] font-bold text-2xl">Simple Shopper</p>
                 </div>
                 <nav className="flex gap-6 mx-auto text-gray-700">
-                    <Link to="/">Home</Link>
-                    <Link to="shop">Shop</Link>
-                    <Link to="cart">Cart</Link>
+                    <NavLink 
+                        to="/"
+                        style={({ isActive }) => ({
+                            color: isActive ? "blue" : "black",
+                        })}
+                    >
+                        Home
+                    </NavLink>
+                    <NavLink
+                        to="shop"
+                        style={({ isActive }) => ({
+                            color: isActive ? "blue" : "black",
+                        })}
+                    > 
+                        Shop  
+                    </NavLink>
+                    <NavLink
+                        to="cart"
+                        style={({ isActive }) => ({
+                            color: isActive ? "blue" : "black",
+                        })}
+                    >
+                        Cart
+                    </NavLink>
                 </nav>
             </header>
-            <Outlet context={[cartItems, setCartItems, setShowModal]}/> {/*Render child routes */}
-            <footer className="bg-[#F9F9F9FF]">
+            <Outlet context={[cartItems, setCartItems, setShowModal, dataRef, setShowCart]}/> {/*Render child routes */}
+            <footer className={`bg-[#F9F9F9FF] ${showCart && "fixed w-full bottom-0"}`}>
                 <div className="flex pt-7 justify-around">
                     <div>
                         <div className="flex">

@@ -4,12 +4,18 @@ import { useOutletContext } from "react-router";
 export default function Shop() {
     const [items, setItems] = useState([]);
     const [dataIsLoaded, setDataIsLoaded] = useState(false);
-    const [cartItems, setCartItems, setShowModal] = useOutletContext();
+    const [cartItems, setCartItems, setShowModal, dataRef, setShowCart] = useOutletContext();
 
     let randomNumber;
-    let usedNumbers = new Set();
+    setShowCart(false);
 
     useEffect(() => {
+        let usedNumbers = new Set();
+        if(dataRef.current) {
+            setItems(dataRef.current);
+            setDataIsLoaded(true);
+            return;
+        }
         async function getProducts() {
             const requests = [];
             for(let i = 0; i < 10; i++) {
@@ -28,7 +34,7 @@ export default function Shop() {
             }
 
             const result = await Promise.all(requests);
-            console.log(result)
+
             result.map((item) => {
                 if(item.id === 1) {
                     item.title = "Fjallraven - Foldsack No.1 Backpack"
@@ -63,11 +69,16 @@ export default function Shop() {
                 else if(item.id === 15) {
                     item.title = "BIYLACLESEN Women's Jacket Winter Coats"
                 }
+                else if(item.id === 16) {
+                    item.title = "Lock and Love Women's Removable Hood Jacket"
+                }
                 else if(item.id === 20) {
                     item.title = "DANVOUY Womens    Casual Cotton Short"
                 }
             }); 
+            dataRef.current = result;
             setItems(result);
+            console.log(result)
 
             setTimeout(() => {
                 setDataIsLoaded(true);
