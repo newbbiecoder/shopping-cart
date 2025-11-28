@@ -136,7 +136,7 @@ export default function App() {
                 </nav>
             </header>
             <Outlet context={[cartItems, setCartItems, setShowModal, dataRef, setShowCart]}/> {/*Render child routes */}
-            <footer className={`bg-[#F9F9F9FF]    ${showCart && "fixed w-full bottom-0"}`}>
+            <footer className={`bg-[#F9F9F9FF]    ${showCart && "lg:fixed lg:w-full lg:bottom-0"}`}>
                 <div className="block lg:flex pt-7 justify-around">
                     <div>
                         <div className="flex justify-center lg:justify-start">

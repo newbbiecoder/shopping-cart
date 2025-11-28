@@ -1,7 +1,10 @@
 import homePagePic from "./assets/images/home-page-pic.jpg"
 import { Link } from "react-router"
+import { useOutletContext } from "react-router"
 
 export default function Home() {
+    const [cartItems, setCartItems, setShowModal, dataRef, setShowCart] = useOutletContext();
+    setShowCart(false);
     return (
         <>
             <section className="h-100 bg-[#F0F7FEFF] flex flex-col lg:flex-row items-center justify-around">
