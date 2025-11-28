@@ -125,7 +125,7 @@ export default function Shop() {
         <>
             <section>
                 <h1 className="text-center font-bold pt-10 pb-5 border-t border-t-gray-400">Our Products</h1>
-                <div className="flex justify-center gap-10 text-gray-500 pb-10">
+                <div className="hidden lg:flex justify-center gap-10 text-gray-500 pb-10">
                     <p>All Products</p>
                     <p>Category: Apparel</p>
                     <p>Category: Home Goods</p>
