@@ -2,6 +2,7 @@
 
 A responsive shopping cart application built with **React** and **Tailwind CSS** as part of **The Odin Project** curriculum.  
 The project includes page navigation using react-router, product browsing, and a functional shopping cart system.
+Fetched product items from fakestore api --> https://fakestoreapi.com/
 
 ---
 ## Features
